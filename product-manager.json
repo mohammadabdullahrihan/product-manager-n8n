@@ -1,0 +1,1280 @@
+{
+  "meta": {
+    "instanceId": "ae91f3a2c3e99a5233d018ffb5752bb637665a438dc075df08fe407535a29d75",
+    "templateCredsSetupCompleted": true
+  },
+  "nodes": [
+    {
+      "id": "8b252a0c-1ae3-4c3b-88b9-c9404c4800ac",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -944,
+        704
+      ],
+      "parameters": {
+        "color": 3,
+        "width": 416,
+        "height": 272,
+        "content": "## অর্ডার বাতিল ফ্লো\n- **ট্রিগার:** গুগল শিটে অর্ডার বাতিল হলে।\n- **ধাপ ১:** শিটে ক্যানসেলেশন ইভেন্ট ডিটেক্ট করা।\n- **ধাপ ২:** কাস্টমারকে হোয়াটসঅ্যাপে একটি মেসেজ পাঠিয়ে বাতিলের কথা জানানো।"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "17530300-ece2-4b1a-9d88-3c3efbe72bca",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -944,
+        32
+      ],
+      "parameters": {
+        "color": 4,
+        "width": 416,
+        "height": 192,
+        "content": "## অর্ডার রিমাইন্ডার ফ্লো\n- **ট্রিগার:** প্রতিদিন নির্দিষ্ট সময়ে স্বয়ংক্রিয়ভাবে চলবে।\n- **ধাপ ১:** আজকের সব ডেলিভারি বা অর্ডার শিট থেকে সংগ্রহ করা।\n- **ধাপ ২:** এআই (AI) এর মাধ্যমে পার্সোনালাইজড বাংলা ফলো-আপ মেসেজ তৈরি করা।\n- **ধাপ ৩:** হোয়াটসঅ্যাপের মাধ্যমে কাস্টমারদের পাঠানো।"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "3fd7ed31-f2e7-47dd-96d7-d26f902c21fa",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -640,
+        2624
+      ],
+      "parameters": {
+        "options": {}
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "ee6c1218-d26b-4bec-8ae8-8dd2fbb2433c",
+      "name": "WhatsApp Trigger",
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "position": [
+        -864,
+        2272
+      ],
+      "webhookId": "738b9902-7ae4-46df-bc73-6684d7d67bdf",
+      "parameters": {
+        "options": {},
+        "updates": [
+          "messages"
+        ]
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "95cc9fe1-0599-47f5-b069-7e33e2aaf575",
+      "name": "Simple Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -640,
+        2800
+      ],
+      "parameters": {
+        "sessionKey": "={{ $('Omni-Channel Processor').item.json.platform }}_{{ $('Omni-Channel Processor').item.json.senderId }}",
+        "sessionIdType": "customKey",
+        "contextWindowLength": 6
+      },
+      "typeVersion": 1.3
+    },
+    {
+      "id": "bd1defd2-b07e-4127-a704-cf91e7316441",
+      "name": "Date & Time",
+      "type": "n8n-nodes-base.dateTimeTool",
+      "position": [
+        -640,
+        2976
+      ],
+      "parameters": {
+        "options": {
+          "timezone": "Asia/Kolkata"
+        }
+      },
+      "typeVersion": 2
+    },
+    {
+      "id": "958b5f9a-87fa-456c-a0b0-10f04950e27a",
+      "name": "Send message",
+      "type": "n8n-nodes-base.whatsApp",
+      "position": [
+        1100,
+        0
+      ],
+      "webhookId": "779c6e67-50cc-4757-9a96-14ab5cc1521f",
+      "parameters": {
+        "textBody": "={{ $json.output }}",
+        "operation": "send",
+        "additionalFields": {},
+        "recipientPhoneNumber": "={{ $('Omni-Channel Processor').item.json.senderId }}"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "9f3e4761-a07d-4cf0-9816-723506851185",
+      "name": "Get Customer List For User",
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "position": [
+        -448,
+        2832
+      ],
+      "parameters": {
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "typeVersion": 4.7
+    },
+    {
+      "id": "f8f6163b-e00e-448d-876a-6e6617551606",
+      "name": "Add Customer",
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "position": [
+        -448,
+        2640
+      ],
+      "parameters": {
+        "columns": {
+          "value": {
+            "address": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('address', ``, 'string') }}",
+            "name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('name', ``, 'string') }}",
+            "email": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('email', ``, 'string') }}",
+            "customer_id": "={{ $now.toMillis() }}",
+            "whatsapp_number": "={{ $('WhatsApp Trigger').item.json.contacts[0].wa_id }}"
+          },
+          "schema": [
+            {
+              "id": "customer_id",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "customer_id",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "whatsapp_number",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "whatsapp_number",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "name",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "name",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "address",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "address",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "email",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            }
+          ],
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {},
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "typeVersion": 4.7
+    },
+    {
+      "id": "adfbc305-959c-4874-bf41-e6e4367900f3",
+      "name": "Get User Orders",
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "position": [
+        -272,
+        2832
+      ],
+      "parameters": {
+        "options": {},
+        "filtersUI": {
+          "values": [
+            {
+              "lookupValue": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}",
+              "lookupColumn": "whatsapp_number"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "typeVersion": 4.7
+    },
+    {
+      "id": "8da9ce69-2b4f-4415-98de-c30b810dfda0",
+      "name": "Create Order",
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "position": [
+        -272,
+        2640
+      ],
+      "parameters": {
+        "columns": {
+          "value": {
+            "product_name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('product_name', ``, 'string') }}",
+            "quantity": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('quantity', ``, 'string') }}",
+            "status": "Pending",
+            "customer_id": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('customer_id', ``, 'string') }}",
+            "order_id": "={{ $now.toMillis() }}",
+            "whatsapp_number": "={{ $('WhatsApp Trigger').item.json.contacts[0].wa_id }}"
+          },
+          "schema": [
+            {
+              "id": "order_id",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "order_id",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_id",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "customer_id",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "whatsapp_number",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "whatsapp_number",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "product_name",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "product_name",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "quantity",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "quantity",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "status",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            }
+          ],
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {},
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "typeVersion": 4.7
+    },
+    {
+      "id": "54ab2767-ca1b-4a34-98bb-3704e9ac7e6b",
+      "name": "Get All Orders",
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "position": [
+        -80,
+        2832
+      ],
+      "parameters": {
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": "",
+          "cachedResultUrl": "",
+          "cachedResultName": ""
+        },
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "typeVersion": 4.7
+    },
+    {
+      "id": "8f2af0c9-5b67-4d92-8cbf-cc234b64ed4b",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -336,
+        2272
+      ],
+      "parameters": {
+        "text": "={{ $('Omni-Channel Processor').item.json.message }}",
+        "options": {
+          "systemMessage": "আপনি একজন প্রফেশনাল প্রোডাক্ট সেলস এবং কাস্টমার সাপোর্ট এআই সহকারী। আপনার কাজ হলো হোয়াটসঅ্যাপের মাধ্যমে গ্রাহকদের পণ্য নির্বাচন, অর্ডার গ্রহণ এবং অর্ডারের স্ট্যাটাস ম্যানেজ করতে সাহায্য করা। আপনি সবসময় ব্যবহারকারীর সাথে অত্যন্ত নম্র, বন্ধুত্বপূর্ণ এবং মানুষের মতো (human-like) বাংলায় কথা বলবেন।\n\nমূল কাজের ধাপসমূহ:\n\n১. সম্ভাষণ ও মেনু:\nযখন ব্যবহারকারী প্রথমবার মেসেজ দিবেন, তাকে অভিবাদন জানান:\n'আসসালামু আলাইকুম/নমস্কার! [আপনার দোকানের নাম]-এ আপনাকে স্বাগতম! আমি আপনাকে কীভাবে সাহায্য করতে পারি?\nঅনুগ্রহ করে নিচের একটি অপশন বেছে নিন:\n১. নতুন অর্ডার করুন (Product Catalog)\n২. আমার বর্তমান অর্ডারের অবস্থা দেখুন\n৩. অর্ডারের তথ্য পরিবর্তন করুন\n৪. অর্ডার বাতিল করুন’\n\n২. নতুন অর্ডার ফ্লো:\n(ক) কাস্টমার চেক করা: ব্যবহারকারীর হোয়াটসঅ্যাপ নম্বর দিয়ে নিবন্ধিত গ্রাহকদের তালিকা দেখুন।\nযদি কোনো কাস্টমার আগে থেকে থাকে, তবে তাকে অভিবাদন জানিয়ে জিজ্ঞাসা করুন তিনি কী কিনতে চান।\nযদি নতুন কাস্টমার হয়:\nনাম, ঠিকানা এবং ইমেল জিজ্ঞাসা করুন।\nAdd Customer টুলে তথ্য সেভ করুন।\n\n(খ) প্রোডাক্ট নির্বাচন:\nConfig শিট থেকে এভেইলএবল প্রোডাক্টের তালিকা দেখুন।\nব্যবহারকারীকে প্রোডাক্টের নাম এবং দাম দেখান।\nব্যবহারকারীকে একটি প্রোডাক্ট এবং পরিমাণ (Quantity) বেছে নিতে বলুন।\n\n(গ) অর্ডার কনফার্মেশন:\nসব তথ্য পাওয়ার পর ‘Create Order’ টুলের মাধ্যমে অর্ডার সম্পন্ন করুন। অর্ডার শেষে একটি সুন্দর কনফার্মেশন মেসেজ দিন:\n'আলহামদুলিল্লাহ! আপনার অর্ডারটি সফলভাবে গ্রহণ করা হয়েছে।\nঅর্ডার আইডি: {order_id}\nপণ্য: {product_name}\nপরিমাণ: {quantity}\nআমাদের প্রতিনিধি শীঘ্রই আপনার সাথে যোগাযোগ করবেন। ধন্যবাদ।'\n\n৩. অর্ডার দেখা (My Orders):\nবর্তমানে করা সকল অর্ডারের তালিকা এবং তাদের বর্তমান অবস্থা (Pending/Shipped/Delivered) দেখান।\n\n৪. অর্ডার আপডেট (Update Order):\nব্যবহারকারীর অর্ডারগুলো দেখান এবং কোনটি পরিবর্তন করতে চান তা জিজ্ঞাসা করুন।\n\n৫. অর্ডার বাতিল (Cancel):\nব্যবহারকারীর অর্ডারগুলো দেখান।\nকোনটি বাতিল করতে চান জিজ্ঞাসা করুন।\n‘Cancel Order’ টুল ব্যবহার করে স্ট্যাটাস ‘Cancelled’ করুন এবং একটি কনফার্মেশন মেসেজ দিন।\n\nমেমোরি ও স্টাইল গাইড:\n- সবসময় মনে রাখবেন ব্যবহারকারী কোন ধাপে আছেন।\n- ভাষা হবে সহজ, শুদ্ধ এবং বন্ধুত্বপূর্ণ বাংলা।\n- ইমোজি ব্যবহার করুন যোগাযোগ আরও প্রাণবন্ত করতে। ✨\n\n**ওমনি-চ্যানেল নির্দেশিকা:**\nআপনি বর্তমানে `{{ $('Omni-Channel Processor').item.json.platform }}` প্ল্যাটফর্মে কথা বলছেন।"
+        },
+        "promptType": "define"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "895a58ff-a97e-48c2-8c94-4beb1ed6dd71",
+      "name": "Update Order",
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "position": [
+        -80,
+        2640
+      ],
+      "parameters": {
+        "columns": {
+          "value": {
+            "product_name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('product_name', ``, 'string') }}",
+            "quantity": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('quantity', ``, 'string') }}",
+            "order_id": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('order_id__using_to_match_', ``, 'string') }}"
+          },
+          "schema": [
+            {
+              "id": "order_id",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "order_id",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_id",
+              "type": "string",
+              "display": true,
+              "removed": true,
+              "required": false,
+              "displayName": "customer_id",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "whatsapp_number",
+              "type": "string",
+              "display": true,
+              "removed": true,
+              "required": false,
+              "displayName": "whatsapp_number",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "product_name",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "product_name",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "quantity",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "quantity",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "type": "string",
+              "display": true,
+              "removed": true,
+              "required": false,
+              "displayName": "status",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            }
+          ],
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "order_id"
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {},
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "typeVersion": 4.7
+    },
+    {
+      "id": "214abc48-d327-47ad-9d6a-df25af9c2622",
+      "name": "Cancel Order",
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "position": [
+        112,
+        2640
+      ],
+      "parameters": {
+        "columns": {
+          "value": {
+            "status": "Cancelled",
+            "order_id": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('order_id__using_to_match_', ``, 'string') }}"
+          },
+          "schema": [
+            {
+              "id": "order_id",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "order_id",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_id",
+              "type": "string",
+              "display": true,
+              "removed": true,
+              "required": false,
+              "displayName": "customer_id",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "whatsapp_number",
+              "type": "string",
+              "display": true,
+              "removed": true,
+              "required": false,
+              "displayName": "whatsapp_number",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "status",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            }
+          ],
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "order_id"
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {},
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "typeVersion": 4.7
+    },
+    {
+      "id": "934a9b4a-2760-416e-94fa-0200c208ec1d",
+      "name": "Config",
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "position": [
+        112,
+        2832
+      ],
+      "parameters": {
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": "",
+          "cachedResultUrl": "",
+          "cachedResultName": ""
+        },
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "typeVersion": 4.7
+    },
+    {
+      "id": "43afc9b9-06f9-4794-a5d2-9b4e3407c7ad",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1376,
+        2096
+      ],
+      "parameters": {
+        "color": 5,
+        "width": 444,
+        "height": 1016,
+        "content": "## 🚀 এআই-চালিত সেলস অ্যাসিস্ট্যান্ট\n\nআপনার দোকানের অর্ডার ম্যানেজমেন্ট এখন আরও সহজ! হোয়াটসঅ্যাপের মাধ্যমেই প্রোডাক্ট ক্যাটালগ দেখুন, অর্ডার করুন এবং ক্যানসেল করুন।\n\n### ✅ এটি কী করে:\n- 🗓 **নতুন অর্ডার** গ্রহণ করা\n- 🔁 **অর্ডার আপডেট** করা\n- ❌ **অর্ডার বাতিল** করা\n- ⏰ **ফলো-আপ** করা\n\n### 🛠 যেভাবে শুরু করবেন:\n১. আপনার ক্রেডেনশিয়াল কানেক্ট করুন (WhatsApp, Gemini, Google Sheet)।\n২. ওয়ার্কফ্লোটি অ্যাক্টিভেট করুন।\n৩. হোয়াটসঅ্যাপে `হাই` বা `অর্ডার করতে চাই` লিখে মেসেজ দিন।\n"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "5ebc144a-5b57-47ce-8a16-942dcb18d8f8",
+      "cid": "Ikx1Y2FzIFBleXJpbiI",
+      "name": "Sticky Note16",
+      "type": "n8n-nodes-base.stickyNote",
+      "notes": "© 2025 Lucas Peyrin",
+      "creator": "Lucas Peyrin",
+      "position": [
+        -496,
+        2592
+      ],
+      "parameters": {
+        "color": 7,
+        "width": 756,
+        "height": 484,
+        "content": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis nodes allows your agent create and get data from Google Sheets\n"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "a204fc5a-6c63-4dea-94c4-59211a241ed4",
+      "cid": "Ikx1Y2FzIFBleXJpbiI",
+      "name": "Sticky Note13",
+      "type": "n8n-nodes-base.stickyNote",
+      "notes": "© 2025 Lucas Peyrin",
+      "creator": "Lucas Peyrin",
+      "position": [
+        -416,
+        2080
+      ],
+      "parameters": {
+        "color": 7,
+        "width": 396,
+        "height": 380,
+        "content": "Product Sales AI Assistant:\n1. Create Order\n2. View Order Status \n3. Update Order\n4. Cancellation\n\nEdit the **System Message** to adjust your agent’s thinking, behavior, and replies.\n\n\n\n\n\n\n\n\n\n\n"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "d672a03d-ea19-4cd7-9f2a-6be41f2d072e",
+      "name": "Setup Instructions",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -176,
+        -288
+      ],
+      "parameters": {
+        "color": 7,
+        "width": 420,
+        "height": 524,
+        "content": "⚙️ **সেটআপ নির্দেশনা**:\n\n১. **Get Order Sheet** নোডটি এডিট করুন → আপনার গুগল শিট আইডি বসান।\n২. **AI Agent** এবং অন্যান্য নোডে আপনার এপিআই কি কানেক্ট করুন।\n৩. n8n Credentials Manager-এ হোয়াটসঅ্যাপ এবং গুগল শিটের ক্রেডেনশিয়াল যোগ করুন।\n৪. ওয়ার্কফ্লোটি অ্যাক্টিভেট করুন।"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "4d72c54d-078c-4187-bec2-16de2b0a82de",
+      "name": "Schedule Trigger1",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        -432,
+        64
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "e45f1771-70f9-4fee-9557-75fe44540233",
+      "name": "Google Gemini Chat Model3",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -240,
+        288
+      ],
+      "parameters": {
+        "options": {}
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "b058e4d9-12a5-42cb-8889-838386e3e7ad",
+      "name": "Get Appointment sheet1",
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "position": [
+        -96,
+        288
+      ],
+      "parameters": {
+        "options": {},
+        "sheetName": "YOUR_SHEET_TAB_ID_HERE",
+        "documentId": "YOUR_SPREADSHEET_ID_HERE"
+      },
+      "typeVersion": 4.7
+    },
+    {
+      "id": "df042b49-9570-440d-b066-f932238ae0ce",
+      "name": "Date & Time2",
+      "type": "n8n-nodes-base.dateTimeTool",
+      "position": [
+        32,
+        288
+      ],
+      "parameters": {
+        "options": {
+          "timezone": "Asia/Kolkata"
+        }
+      },
+      "typeVersion": 2
+    },
+    {
+      "id": "b4c59b68-7a89-4b8f-8069-ad6b01efcbc6",
+      "name": "Send message in WhatsApp Business Cloud",
+      "type": "n8n-nodes-base.whatsAppTool",
+      "position": [
+        176,
+        288
+      ],
+      "webhookId": "859580aa-af6e-45fe-9eb1-51226927e690",
+      "parameters": {
+        "textBody": "Hello {{ $json['Name'] }}, this is a reminder for your appointment scheduled today at {{ $json['Time'] }}.",
+        "operation": "send",
+        "additionalFields": {},
+        "recipientPhoneNumber": "YOUR_PHONE_NUMBER_HERE"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "a6ae6d6a-0237-4257-8cfc-01780aa15a52",
+      "name": "Order Reminder AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -96,
+        64
+      ],
+      "parameters": {
+        "text": "={{ $json['Readable date'] }}",
+        "options": {
+          "systemMessage": "আপনি একজন সেলস সহকারী। আপনার কাজ হলো গুগল শিট থেকে আজকের ডেলিভারি বা পেন্ডিং অর্ডারগুলো খুঁজে বের করা এবং কাস্টমারদের হোয়াটসঅ্যাপে একটি বন্ধুত্বপূর্ণ আপডেট বা রিমাইন্ডার মেসেজ পাঠানো।\nমেসেজটি বাংলায় হবে। উদাহরণ:\n'আসসালামু আলাইকুম/নমস্কার [Name], [দোকানের নাম]-এর পক্ষ থেকে আপনার অর্ডারের কথা মনে করিয়ে দিচ্ছি। আপনার অর্ডারটি বর্তমানে [Status] অবস্থায় আছে। দ্রুত ডেলিভারি নিশ্চিত করতে আমরা কাজ করছি। ধন্যবাদ!'"
+        },
+        "promptType": "define"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "954a6a94-c847-4dfd-87d9-d05783bca0c9",
+      "name": "Send Cancellation Message",
+      "type": "n8n-nodes-base.whatsApp",
+      "position": [
+        208,
+        848
+      ],
+      "webhookId": "8093a666-5c89-4efd-8aee-7ce62869ae11",
+      "parameters": {
+        "textBody": "দুঃখিত, আপনার অর্ডারটি (ID: {{ $('Google Sheets Trigger1').item.json.order_id }}) বাতিল করা হয়েছে। কোনো প্রয়োজনে আমাদের সাথে যোগাযোগ করুন।",
+        "operation": "send",
+        "phoneNumberId": "YOUR_WHATSAPP_PHONE_NUMBER_ID",
+        "additionalFields": {},
+        "recipientPhoneNumber": "={{ $('Google Sheets Trigger1').item.json.whatsapp_number.toString() }}"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "88a8d79b-8e8e-4481-af76-14fef00360b1",
+      "name": "Google Sheets Trigger1",
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "position": [
+        -464,
+        752
+      ],
+      "parameters": {
+        "event": "rowUpdate",
+        "options": {
+          "columnsToWatch": [
+            "status"
+          ]
+        },
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "sheetName": "YOUR_SHEET_TAB_ID_HERE",
+        "documentId": "YOUR_SPREADSHEET_ID_HERE"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "9262e2f1-e96e-40aa-9598-af7049600500",
+      "name": "Check status \"Cancelled\"1",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        -240,
+        752
+      ],
+      "parameters": {
+        "options": {},
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "or",
+          "conditions": [
+            {
+              "id": "8b4c82d3-1d5d-43f3-9049-c2eb77d3c89d",
+              "operator": {
+                "name": "filter.operator.equals",
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.status.toLowerCase() }}",
+              "rightValue": "cancelled"
+            }
+          ]
+        }
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "ig-webhook",
+      "name": "Instagram Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        -500,
+        200
+      ],
+      "parameters": {
+        "path": "ig-msg",
+        "options": {},
+        "httpMethod": "POST"
+      },
+      "typeVersion": 2
+    },
+    {
+      "id": "fb-webhook",
+      "name": "Facebook Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        -500,
+        400
+      ],
+      "parameters": {
+        "path": "fb-msg",
+        "options": {},
+        "httpMethod": "POST"
+      },
+      "typeVersion": 2
+    },
+    {
+      "id": "omni-processor",
+      "name": "Omni-Channel Processor",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        -250,
+        300
+      ],
+      "parameters": {
+        "jsCode": "const inputData = $input.first().json;\n\n// Case 1: WhatsApp (Existing Trigger)\nif (inputData.contacts && inputData.messages) {\n  return {\n    platform: 'whatsapp',\n    senderId: inputData.contacts[0].wa_id,\n    senderName: inputData.contacts[0].profile.name || 'User',\n    message: inputData.messages[0].text.body\n  };\n}\n\n// Case 2: Instagram\nif (inputData.object === 'instagram' && inputData.entry) {\n  const msg = inputData.entry[0].messaging[0];\n  return {\n    platform: 'instagram',\n    senderId: msg.sender.id,\n    senderName: 'Instagram User',\n    message: msg.message.text\n  };\n}\n\n// Case 3: Facebook\nif (inputData.object === 'page' && inputData.entry) {\n  const msg = inputData.entry[0].messaging[0];\n  return {\n    platform: 'facebook',\n    senderId: msg.sender.id,\n    senderName: 'Facebook User',\n    message: msg.message.text\n  };\n}\n\nreturn { platform: 'unknown', senderId: 'unknown', message: '' };"
+      },
+      "typeVersion": 2
+    },
+    {
+      "id": "resp-router",
+      "name": "Response Router",
+      "type": "n8n-nodes-base.switch",
+      "position": [
+        800,
+        300
+      ],
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Omni-Channel Processor').item.json.platform }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "rightValue": "whatsapp"
+                  }
+                ]
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Omni-Channel Processor').item.json.platform }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "rightValue": "instagram"
+                  }
+                ]
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Omni-Channel Processor').item.json.platform }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "rightValue": "facebook"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "typeVersion": 3
+    },
+    {
+      "id": "ig-sender",
+      "name": "Instagram Sender",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1100,
+        200
+      ],
+      "parameters": {
+        "url": "=https://graph.facebook.com/v18.0/me/messages",
+        "method": "POST",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "recipient[id]",
+              "value": "={{ $('Omni-Channel Processor').item.json.senderId }}"
+            },
+            {
+              "name": "message[text]",
+              "value": "={{ $json.output }}"
+            }
+          ]
+        },
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_TOKEN"
+            }
+          ]
+        }
+      },
+      "typeVersion": 4.2
+    },
+    {
+      "id": "fb-sender",
+      "name": "Facebook Sender",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1100,
+        400
+      ],
+      "parameters": {
+        "url": "https://graph.facebook.com/v18.0/me/messages",
+        "method": "POST",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "recipient[id]",
+              "value": "={{ $('Omni-Channel Processor').item.json.senderId }}"
+            },
+            {
+              "name": "message[text]",
+              "value": "={{ $json.output }}"
+            }
+          ]
+        },
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_TOKEN"
+            }
+          ]
+        }
+      },
+      "typeVersion": 4.2
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Config": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Response Router",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Patient": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date & Time": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date & Time2": {
+      "ai_tool": [
+        [
+          {
+            "node": "Appointment Reminder AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Appointment": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Trigger": {
+      "main": [
+        [
+          {
+            "node": "Omni-Channel Processor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Appointment Reminder AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cancel Appointment": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Appointments": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Is Amount Paid1": {
+      "main": [
+        [
+          {
+            "node": "Send Cancellation Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get User Appointments": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Appointment sheet1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Appointment Reminder AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Check status \"Cancelled\"1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reschedule Appointment": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Patient List For User": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Appointment Reminder AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send message in WhatsApp Business Cloud": {
+      "ai_tool": [
+        [
+          {
+            "node": "Appointment Reminder AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check status \"Cancelled\"1": {
+      "main": [
+        [
+          {
+            "node": "Send Cancellation Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Instagram Webhook": {
+      "main": [
+        [
+          {
+            "node": "Omni-Channel Processor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Facebook Webhook": {
+      "main": [
+        [
+          {
+            "node": "Omni-Channel Processor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Omni-Channel Processor": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Response Router": {
+      "main": [
+        [
+          {
+            "node": "Send message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Instagram Sender",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Facebook Sender",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
