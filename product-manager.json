@@ -9,8 +9,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -944,
-        704
+        -200,
+        2000
       ],
       "parameters": {
         "color": 3,
@@ -25,8 +25,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -944,
-        32
+        -200,
+        1300
       ],
       "parameters": {
         "color": 4,
@@ -41,8 +41,8 @@
       "name": "Google Gemini Chat Model",
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "position": [
-        -640,
-        2624
+        600,
+        450
       ],
       "parameters": {
         "options": {}
@@ -54,8 +54,8 @@
       "name": "WhatsApp Trigger",
       "type": "n8n-nodes-base.whatsAppTrigger",
       "position": [
-        -864,
-        2272
+        0,
+        0
       ],
       "webhookId": "738b9902-7ae4-46df-bc73-6684d7d67bdf",
       "parameters": {
@@ -71,8 +71,8 @@
       "name": "Simple Memory",
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "position": [
-        -640,
-        2800
+        800,
+        450
       ],
       "parameters": {
         "sessionKey": "={{ $('Omni-Channel Processor').item.json.platform }}_{{ $('Omni-Channel Processor').item.json.senderId }}",
@@ -86,8 +86,8 @@
       "name": "Date & Time",
       "type": "n8n-nodes-base.dateTimeTool",
       "position": [
-        -640,
-        2976
+        1000,
+        450
       ],
       "parameters": {
         "options": {
@@ -101,7 +101,7 @@
       "name": "Send message",
       "type": "n8n-nodes-base.whatsApp",
       "position": [
-        1100,
+        1550,
         0
       ],
       "webhookId": "779c6e67-50cc-4757-9a96-14ab5cc1521f",
@@ -118,8 +118,8 @@
       "name": "Get Customer List For User",
       "type": "n8n-nodes-base.googleSheetsTool",
       "position": [
-        -448,
-        2832
+        300,
+        950
       ],
       "parameters": {
         "sheetName": {
@@ -140,8 +140,8 @@
       "name": "Add Customer",
       "type": "n8n-nodes-base.googleSheetsTool",
       "position": [
-        -448,
-        2640
+        300,
+        750
       ],
       "parameters": {
         "columns": {
@@ -219,8 +219,8 @@
       "name": "Get User Orders",
       "type": "n8n-nodes-base.googleSheetsTool",
       "position": [
-        -272,
-        2832
+        550,
+        950
       ],
       "parameters": {
         "options": {},
@@ -245,8 +245,8 @@
       "name": "Create Order",
       "type": "n8n-nodes-base.googleSheetsTool",
       "position": [
-        -272,
-        2640
+        550,
+        750
       ],
       "parameters": {
         "columns": {
@@ -334,8 +334,8 @@
       "name": "Get All Orders",
       "type": "n8n-nodes-base.googleSheetsTool",
       "position": [
-        -80,
-        2832
+        800,
+        950
       ],
       "parameters": {
         "sheetName": {
@@ -358,13 +358,13 @@
       "name": "AI Agent",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "position": [
-        -336,
-        2272
+        800,
+        200
       ],
       "parameters": {
         "text": "={{ $('Omni-Channel Processor').item.json.message }}",
         "options": {
-          "systemMessage": "আপনি একজন প্রফেশনাল প্রোডাক্ট সেলস এবং কাস্টমার সাপোর্ট এআই সহকারী। আপনার কাজ হলো হোয়াটসঅ্যাপের মাধ্যমে গ্রাহকদের পণ্য নির্বাচন, অর্ডার গ্রহণ এবং অর্ডারের স্ট্যাটাস ম্যানেজ করতে সাহায্য করা। আপনি সবসময় ব্যবহারকারীর সাথে অত্যন্ত নম্র, বন্ধুত্বপূর্ণ এবং মানুষের মতো (human-like) বাংলায় কথা বলবেন।\n\nমূল কাজের ধাপসমূহ:\n\n১. সম্ভাষণ ও মেনু:\nযখন ব্যবহারকারী প্রথমবার মেসেজ দিবেন, তাকে অভিবাদন জানান:\n'আসসালামু আলাইকুম/নমস্কার! [আপনার দোকানের নাম]-এ আপনাকে স্বাগতম! আমি আপনাকে কীভাবে সাহায্য করতে পারি?\nঅনুগ্রহ করে নিচের একটি অপশন বেছে নিন:\n১. নতুন অর্ডার করুন (Product Catalog)\n২. আমার বর্তমান অর্ডারের অবস্থা দেখুন\n৩. অর্ডারের তথ্য পরিবর্তন করুন\n৪. অর্ডার বাতিল করুন’\n\n২. নতুন অর্ডার ফ্লো:\n(ক) কাস্টমার চেক করা: ব্যবহারকারীর হোয়াটসঅ্যাপ নম্বর দিয়ে নিবন্ধিত গ্রাহকদের তালিকা দেখুন।\nযদি কোনো কাস্টমার আগে থেকে থাকে, তবে তাকে অভিবাদন জানিয়ে জিজ্ঞাসা করুন তিনি কী কিনতে চান।\nযদি নতুন কাস্টমার হয়:\nনাম, ঠিকানা এবং ইমেল জিজ্ঞাসা করুন।\nAdd Customer টুলে তথ্য সেভ করুন।\n\n(খ) প্রোডাক্ট নির্বাচন:\nConfig শিট থেকে এভেইলএবল প্রোডাক্টের তালিকা দেখুন।\nব্যবহারকারীকে প্রোডাক্টের নাম এবং দাম দেখান।\nব্যবহারকারীকে একটি প্রোডাক্ট এবং পরিমাণ (Quantity) বেছে নিতে বলুন।\n\n(গ) অর্ডার কনফার্মেশন:\nসব তথ্য পাওয়ার পর ‘Create Order’ টুলের মাধ্যমে অর্ডার সম্পন্ন করুন। অর্ডার শেষে একটি সুন্দর কনফার্মেশন মেসেজ দিন:\n'আলহামদুলিল্লাহ! আপনার অর্ডারটি সফলভাবে গ্রহণ করা হয়েছে।\nঅর্ডার আইডি: {order_id}\nপণ্য: {product_name}\nপরিমাণ: {quantity}\nআমাদের প্রতিনিধি শীঘ্রই আপনার সাথে যোগাযোগ করবেন। ধন্যবাদ।'\n\n৩. অর্ডার দেখা (My Orders):\nবর্তমানে করা সকল অর্ডারের তালিকা এবং তাদের বর্তমান অবস্থা (Pending/Shipped/Delivered) দেখান।\n\n৪. অর্ডার আপডেট (Update Order):\nব্যবহারকারীর অর্ডারগুলো দেখান এবং কোনটি পরিবর্তন করতে চান তা জিজ্ঞাসা করুন।\n\n৫. অর্ডার বাতিল (Cancel):\nব্যবহারকারীর অর্ডারগুলো দেখান।\nকোনটি বাতিল করতে চান জিজ্ঞাসা করুন।\n‘Cancel Order’ টুল ব্যবহার করে স্ট্যাটাস ‘Cancelled’ করুন এবং একটি কনফার্মেশন মেসেজ দিন।\n\nমেমোরি ও স্টাইল গাইড:\n- সবসময় মনে রাখবেন ব্যবহারকারী কোন ধাপে আছেন।\n- ভাষা হবে সহজ, শুদ্ধ এবং বন্ধুত্বপূর্ণ বাংলা।\n- ইমোজি ব্যবহার করুন যোগাযোগ আরও প্রাণবন্ত করতে। ✨\n\n**ওমনি-চ্যানেল নির্দেশিকা:**\nআপনি বর্তমানে `{{ $('Omni-Channel Processor').item.json.platform }}` প্ল্যাটফর্মে কথা বলছেন।"
+          "systemMessage": "আপনি একজন প্রফেশনাল প্রোডাক্ট সেলস এবং কাস্টমার সাপোর্ট এআই সহকারী। আপনার কাজ হলো হোয়াটসঅ্যাপের মাধ্যমে গ্রাহকদের পণ্য নির্বাচন, অর্ডার গ্রহণ এবং অর্ডারের স্ট্যাটাস ম্যানেজ করতে সাহায্য করা।\n\n**ইনভেন্টরি ও প্রোডাক্ট ক্যাটালগ:**\nআপনার কাছে 'Product Inventory/Config' নামে একটি টুল আছে। যখনই কোনো কাস্টমার কোনো প্রোডাক্টের দাম, বিবরণ বা ইনভেন্টরি সম্পর্কে জানতে চাইবে, আপনি এই টুলটি ব্যবহার করে তালিকা দেখবেন এবং তাদের তথ্য দিবেন।\n\nআপনি সবসময় ব্যবহারকারীর সাথে অত্যন্ত নম্র, বন্ধুত্বপূর্ণ এবং মানুষের মতো (human-like) বাংলায় কথা বলবেন।\n\nমূল কাজের ধাপসমূহ:\n\n১. সম্ভাষণ ও মেনু:\nযখন ব্যবহারকারী প্রথমবার মেসেজ দিবেন, তাকে অভিবাদন জানান:\n'আসসালামু আলাইকুম/নমস্কার! [আপনার দোকানের নাম]-এ আপনাকে স্বাগতম! আমি আপনাকে কীভাবে সাহায্য করতে পারি?\nঅনুগ্রহ করে নিচের একটি অপশন বেছে নিন:\n১. নতুন অর্ডার করুন (Product Catalog)\n২. আমার বর্তমান অর্ডারের অবস্থা দেখুন\n৩. অর্ডারের তথ্য পরিবর্তন করুন\n৪. অর্ডার বাতিল করুন’\n\n২. নতুন অর্ডার ফ্লো:\n(ক) কাস্টমার চেক করা: ব্যবহারকারীর হোয়াটসঅ্যাপ নম্বর দিয়ে নিবন্ধিত গ্রাহকদের তালিকা দেখুন।\nযদি কোনো কাস্টমার আগে থেকে থাকে, তবে তাকে অভিবাদন জানিয়ে জিজ্ঞাসা করুন তিনি কী কী আমাদের তালিকা থেকে কিনতে চান।\nযদি নতুন কাস্টমার হয়:\nনাম, ঠিকানা এবং ইমেল জিজ্ঞাসা করুন।\nAdd Customer টুলে তথ্য সেভ করুন।\n\n(খ) প্রোডাক্ট নির্বাচন ও ইনভেন্টরি:\n'Product Inventory/Config' টুল থেকে এভেইলএবল প্রোডাক্টের তালিকা দেখুন।\nব্যবহারকারীকে প্রোডাক্টের নাম এবং দাম দেখান।\nব্যবহারকারীকে একটি প্রোডাক্ট এবং পরিমাণ (Quantity) বেছে নিতে বলুন।\n\n(গ) অর্ডার কনফার্মেশন:\nসব তথ্য পাওয়ার পর ‘Create Order’ টুলের মাধ্যমে অর্ডার সম্পন্ন করুন। অর্ডার শেষে একটি সুন্দর কনফার্মেশন মেসেজ দিন:\n'আলহামদুলিল্লাহ! আপনার অর্ডারটি সফলভাবে গ্রহণ করা হয়েছে।\nঅর্ডার আইডি: {order_id}\nপণ্য: {product_name}\nপরিমাণ: {quantity}\nআমাদের প্রতিনিধি শীঘ্রই আপনার সাথে যোগাযোগ করবেন। ধন্যবাদ।'\n\n৩. অর্ডার দেখা (My Orders):\nবর্তমানে করা সকল অর্ডারের তালিকা এবং তাদের বর্তমান অবস্থা (Pending/Shipped/Delivered) দেখান।\n\n৪. অর্ডার আপডেট (Update Order):\nব্যবহারকারীর অর্ডারগুলো দেখান এবং কোনটি পরিবর্তন করতে চান তা জিজ্ঞাসা করুন।\n\n৫. অর্ডার বাতিল (Cancel):\nব্যবহারকারীর অর্ডারগুলো দেখান।\nকোনটি বাতিল করতে চান জিজ্ঞাসা করুন।\n‘Cancel Order’ টুল ব্যবহার করে স্ট্যাটাস ‘Cancelled’ করুন এবং একটি কনফার্মেশন মেসেজ দিন।\n\nমেমোরি ও স্টাইল গাইড:\n- সবসময় মনে রাখবেন ব্যবহারকারী কোন ধাপে আছেন।\n- ভাষা হবে সহজ, শুদ্ধ এবং বন্ধুত্বপূর্ণ বাংলা।\n- ইমোজি ব্যবহার করুন যোগাযোগ আরও প্রাণবন্ত করতে। ✨\n\n**ওমনি-চ্যানেল নির্দেশিকা:**\nআপনি বর্তমানে `{{ $('Omni-Channel Processor').item.json.platform }}` প্ল্যাটফর্মে কথা বলছেন।"
         },
         "promptType": "define"
       },
@@ -375,8 +375,8 @@
       "name": "Update Order",
       "type": "n8n-nodes-base.googleSheetsTool",
       "position": [
-        -80,
-        2640
+        800,
+        750
       ],
       "parameters": {
         "columns": {
@@ -467,8 +467,8 @@
       "name": "Cancel Order",
       "type": "n8n-nodes-base.googleSheetsTool",
       "position": [
-        112,
-        2640
+        1050,
+        750
       ],
       "parameters": {
         "columns": {
@@ -537,11 +537,11 @@
     },
     {
       "id": "934a9b4a-2760-416e-94fa-0200c208ec1d",
-      "name": "Config",
+      "name": "Product Inventory/Config",
       "type": "n8n-nodes-base.googleSheetsTool",
       "position": [
-        112,
-        2832
+        1050,
+        950
       ],
       "parameters": {
         "sheetName": {
@@ -564,8 +564,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1376,
-        2096
+        -200,
+        -800
       ],
       "parameters": {
         "color": 5,
@@ -583,8 +583,8 @@
       "notes": "© 2025 Lucas Peyrin",
       "creator": "Lucas Peyrin",
       "position": [
-        -496,
-        2592
+        150,
+        650
       ],
       "parameters": {
         "color": 7,
@@ -602,8 +602,8 @@
       "notes": "© 2025 Lucas Peyrin",
       "creator": "Lucas Peyrin",
       "position": [
-        -416,
-        2080
+        600,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -618,8 +618,8 @@
       "name": "Setup Instructions",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -176,
-        -288
+        -650,
+        -800
       ],
       "parameters": {
         "color": 7,
@@ -634,8 +634,8 @@
       "name": "Schedule Trigger1",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        -432,
-        64
+        0,
+        1400
       ],
       "parameters": {
         "rule": {
@@ -653,8 +653,8 @@
       "name": "Google Gemini Chat Model3",
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "position": [
-        -240,
-        288
+        300,
+        1600
       ],
       "parameters": {
         "options": {}
@@ -663,11 +663,11 @@
     },
     {
       "id": "b058e4d9-12a5-42cb-8889-838386e3e7ad",
-      "name": "Get Appointment sheet1",
+      "name": "Get Order Sheet (Reminder)",
       "type": "n8n-nodes-base.googleSheetsTool",
       "position": [
-        -96,
-        288
+        650,
+        1400
       ],
       "parameters": {
         "options": {},
@@ -681,8 +681,8 @@
       "name": "Date & Time2",
       "type": "n8n-nodes-base.dateTimeTool",
       "position": [
-        32,
-        288
+        850,
+        1400
       ],
       "parameters": {
         "options": {
@@ -696,12 +696,12 @@
       "name": "Send message in WhatsApp Business Cloud",
       "type": "n8n-nodes-base.whatsAppTool",
       "position": [
-        176,
-        288
+        1100,
+        1400
       ],
       "webhookId": "859580aa-af6e-45fe-9eb1-51226927e690",
       "parameters": {
-        "textBody": "Hello {{ $json['Name'] }}, this is a reminder for your appointment scheduled today at {{ $json['Time'] }}.",
+        "textBody": "হ্যালো {{ $json['Name'] }}, আমাদের স্টোর থেকে আপনার পারচেজ করা প্রোডাক্টটি আজ ডেলিভারি হওয়ার কথা রয়েছে। কোনো প্রশ্ন থাকলে আমাদের জানান। ধন্যবাদ!",
         "operation": "send",
         "additionalFields": {},
         "recipientPhoneNumber": "YOUR_PHONE_NUMBER_HERE"
@@ -713,8 +713,8 @@
       "name": "Order Reminder AI Agent",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "position": [
-        -96,
-        64
+        400,
+        1400
       ],
       "parameters": {
         "text": "={{ $json['Readable date'] }}",
@@ -730,8 +730,8 @@
       "name": "Send Cancellation Message",
       "type": "n8n-nodes-base.whatsApp",
       "position": [
-        208,
-        848
+        800,
+        2100
       ],
       "webhookId": "8093a666-5c89-4efd-8aee-7ce62869ae11",
       "parameters": {
@@ -748,8 +748,8 @@
       "name": "Google Sheets Trigger1",
       "type": "n8n-nodes-base.googleSheetsTrigger",
       "position": [
-        -464,
-        752
+        0,
+        2100
       ],
       "parameters": {
         "event": "rowUpdate",
@@ -775,8 +775,8 @@
       "name": "Check status \"Cancelled\"1",
       "type": "n8n-nodes-base.if",
       "position": [
-        -240,
-        752
+        400,
+        2100
       ],
       "parameters": {
         "options": {},
@@ -809,7 +809,7 @@
       "name": "Instagram Webhook",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        -500,
+        0,
         200
       ],
       "parameters": {
@@ -824,7 +824,7 @@
       "name": "Facebook Webhook",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        -500,
+        0,
         400
       ],
       "parameters": {
@@ -839,8 +839,8 @@
       "name": "Omni-Channel Processor",
       "type": "n8n-nodes-base.code",
       "position": [
-        -250,
-        300
+        400,
+        200
       ],
       "parameters": {
         "jsCode": "const inputData = $input.first().json;\n\n// Case 1: WhatsApp (Existing Trigger)\nif (inputData.contacts && inputData.messages) {\n  return {\n    platform: 'whatsapp',\n    senderId: inputData.contacts[0].wa_id,\n    senderName: inputData.contacts[0].profile.name || 'User',\n    message: inputData.messages[0].text.body\n  };\n}\n\n// Case 2: Instagram\nif (inputData.object === 'instagram' && inputData.entry) {\n  const msg = inputData.entry[0].messaging[0];\n  return {\n    platform: 'instagram',\n    senderId: msg.sender.id,\n    senderName: 'Instagram User',\n    message: msg.message.text\n  };\n}\n\n// Case 3: Facebook\nif (inputData.object === 'page' && inputData.entry) {\n  const msg = inputData.entry[0].messaging[0];\n  return {\n    platform: 'facebook',\n    senderId: msg.sender.id,\n    senderName: 'Facebook User',\n    message: msg.message.text\n  };\n}\n\nreturn { platform: 'unknown', senderId: 'unknown', message: '' };"
@@ -852,8 +852,8 @@
       "name": "Response Router",
       "type": "n8n-nodes-base.switch",
       "position": [
-        800,
-        300
+        1200,
+        200
       ],
       "parameters": {
         "rules": {
@@ -919,7 +919,7 @@
       "name": "Instagram Sender",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1100,
+        1550,
         200
       ],
       "parameters": {
@@ -954,7 +954,7 @@
       "name": "Facebook Sender",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1100,
+        1550,
         400
       ],
       "parameters": {
@@ -987,7 +987,7 @@
   ],
   "pinData": {},
   "connections": {
-    "Config": {
+    "Product Inventory/Config": {
       "ai_tool": [
         [
           {
@@ -1009,7 +1009,7 @@
         ]
       ]
     },
-    "Add Patient": {
+    "Add Customer": {
       "ai_tool": [
         [
           {
@@ -1035,7 +1035,7 @@
       "ai_tool": [
         [
           {
-            "node": "Appointment Reminder AI Agent1",
+            "node": "Order Reminder AI Agent",
             "type": "ai_tool",
             "index": 0
           }
@@ -1053,7 +1053,7 @@
         ]
       ]
     },
-    "Add Appointment": {
+    "Create Order": {
       "ai_tool": [
         [
           {
@@ -1079,14 +1079,14 @@
       "main": [
         [
           {
-            "node": "Appointment Reminder AI Agent1",
+            "node": "Order Reminder AI Agent",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Cancel Appointment": {
+    "Cancel Order": {
       "ai_tool": [
         [
           {
@@ -1097,7 +1097,7 @@
         ]
       ]
     },
-    "Get All Appointments": {
+    "Get All Orders": {
       "ai_tool": [
         [
           {
@@ -1108,18 +1108,7 @@
         ]
       ]
     },
-    "Check Is Amount Paid1": {
-      "main": [
-        [
-          {
-            "node": "Send Cancellation Message",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get User Appointments": {
+    "Get User Orders": {
       "ai_tool": [
         [
           {
@@ -1130,11 +1119,11 @@
         ]
       ]
     },
-    "Get Appointment sheet1": {
+    "Get Order Sheet (Reminder)": {
       "ai_tool": [
         [
           {
-            "node": "Appointment Reminder AI Agent1",
+            "node": "Order Reminder AI Agent",
             "type": "ai_tool",
             "index": 0
           }
@@ -1152,7 +1141,7 @@
         ]
       ]
     },
-    "Reschedule Appointment": {
+    "Update Order": {
       "ai_tool": [
         [
           {
@@ -1174,7 +1163,7 @@
         ]
       ]
     },
-    "Get Patient List For User": {
+    "Get Customer List For User": {
       "ai_tool": [
         [
           {
@@ -1189,7 +1178,7 @@
       "ai_languageModel": [
         [
           {
-            "node": "Appointment Reminder AI Agent1",
+            "node": "Order Reminder AI Agent",
             "type": "ai_languageModel",
             "index": 0
           }
@@ -1200,7 +1189,7 @@
       "ai_tool": [
         [
           {
-            "node": "Appointment Reminder AI Agent1",
+            "node": "Order Reminder AI Agent",
             "type": "ai_tool",
             "index": 0
           }
